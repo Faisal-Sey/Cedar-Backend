@@ -1,0 +1,22 @@
+[
+  {
+    "model": "auth.User",
+    "pk": 1,
+    "fields": {
+      "username": "nana_erico",
+      "password": "pbkdf2_sha256$600000$GKuaKeSxKyf0gsSbqYb061$tGP06rDa9vbLZ9V7Rypy5bcY6FJ9ESVFxqiuXEoi1hU=",
+      "first_name": "Eric",
+      "last_name": "Nana"
+    }
+  },
+  {
+    "model": "auth.User",
+    "pk": 2,
+    "fields": {
+      "username": "richard_okyere",
+      "password": "pbkdf2_sha256$600000$Dv5KN4sqzbilRRV0wjCRFl$9dwL1F5/yv9fQfN2KtMzwDLMVnG/heTu9CPRD6pYXf4=",
+      "first_name": "Richard",
+      "last_name": "Okyere"
+    }
+  }
+]
