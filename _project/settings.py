@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # internal
+    'invoice',
+
     # external
     'rest_framework',
     'rest_framework_simplejwt',
