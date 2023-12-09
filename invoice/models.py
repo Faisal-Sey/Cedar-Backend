@@ -19,5 +19,7 @@ class Invoice(models.Model):
     mobile_phone_two = models.CharField(max_length=20)
     signature = models.ImageField(null=True)
     email = models.EmailField()
+    presenter_phone = models.CharField(max_length=20, blank=True)
+    presenter_role = models.CharField(max_length=255, blank=True)
 
     objects = models.Manager()
