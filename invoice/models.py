@@ -14,5 +14,10 @@ class Invoice(models.Model):
     terms = models.JSONField()
     quote_number = models.CharField(max_length=255)
     invoice_type = models.CharField(max_length=255)
+    last_words = models.TextField()
+    mobile_phone_one = models.CharField(max_length=20)
+    mobile_phone_two = models.CharField(max_length=20)
+    signature = models.ImageField(null=True)
+    email = models.EmailField()
 
     objects = models.Manager()
