@@ -85,3 +85,25 @@ def update_invoice(request, *args, **kwargs):
             "message": "Invoices retrieved successfully",
         }
     )
+
+
+@api_view(['DELETE'])
+def delete_invoice(request, *args, **kwargs):
+    invoice_id = kwargs.get("invoice_id")
+    try:
+        Invoice.objects.get(id=invoice_id).delete()
+        return JsonResponse(
+            status=200,
+            data={
+                "status": "success",
+                "message": "Invoice deleted successfully",
+            }
+        )
+    except Invoice.DoesNotExist:
+        return JsonResponse(
+            status=400,
+            data={
+                "status": "failed",
+                "message": "Invoice not found",
+            }
+        )
