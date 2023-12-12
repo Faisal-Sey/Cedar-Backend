@@ -33,7 +33,8 @@ def login_user(request, *args, **kwargs):
                 'access_token': str(refresh_token.access_token),
                 'refresh_token': str(refresh_token),
                 'first_name': user.first_name,
-                'last_name': user.last_name
+                'last_name': user.last_name,
+                'user_role': user.user_role_id
             }
         },
         safe=False

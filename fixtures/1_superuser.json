@@ -1,22 +1,42 @@
 [
   {
-    "model": "auth.User",
+    "model": "authentication.UserRole",
+    "pk": 1,
+    "fields": {
+      "name": "CEO",
+      "created_at": "2023-11-30T18:12:43.311405",
+      "updated_at": "2023-11-30T18:12:43.311405"
+    }
+  },
+  {
+    "model": "authentication.UserRole",
+    "pk": 2,
+    "fields": {
+      "name": "Officers",
+      "created_at": "2023-11-30T18:12:43.311405",
+      "updated_at": "2023-11-30T18:12:43.311405"
+    }
+  },
+  {
+    "model": "authentication.CustomUser",
     "pk": 1,
     "fields": {
       "username": "nana_erico",
       "password": "pbkdf2_sha256$600000$GKuaKeSxKyf0gsSbqYb061$tGP06rDa9vbLZ9V7Rypy5bcY6FJ9ESVFxqiuXEoi1hU=",
       "first_name": "Eric",
-      "last_name": "Nana"
+      "last_name": "Nana",
+      "user_role_id": 1
     }
   },
   {
-    "model": "auth.User",
+    "model": "authentication.CustomUser",
     "pk": 2,
     "fields": {
       "username": "richard_okyere",
       "password": "pbkdf2_sha256$600000$Dv5KN4sqzbilRRV0wjCRFl$9dwL1F5/yv9fQfN2KtMzwDLMVnG/heTu9CPRD6pYXf4=",
       "first_name": "Richard",
-      "last_name": "Okyere"
+      "last_name": "Okyere",
+      "user_role_id": 2
     }
   }
 ]
