@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     # internal
     'invoice',
+    'report',
     'authentication',
 
     # external
