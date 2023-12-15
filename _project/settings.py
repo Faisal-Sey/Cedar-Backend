@@ -148,7 +148,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://localhost:5174",
     "http://127.0.0.1:5174",
-    'https://cedar-admin-ten.vercel.app'
+    'https://cedar-admin-ten.vercel.app',
+    'https://admin.cedarcompanylimited.com',
 ]
 
 MEDIA_URL = '/media/'
