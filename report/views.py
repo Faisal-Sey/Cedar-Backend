@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 
 from invoice.helpers import sanitize_form_data
 from invoice.models import Invoice
+from report.models import Report, FileModel
 
 
 # Save invoice data
@@ -11,17 +12,20 @@ def add_report(request, *args, **kwargs):
     data = request.data
     try:
         data = sanitize_form_data(dict(data))
-        invoice = Invoice.objects.create(**data)
-        invoice.quote_number = f"{data.get('invoice_type')}-{invoice.id}-{str(data.get('invoice_date'))[-2:]}"
-        invoice.save()
+        images = data.pop("images", [])
+        bulk_create_data = [
+            FileModel(file=x)
+            for x in images
+        ]
+        all_saved_images = FileModel.objects.bulk_create(bulk_create_data)
+        report = Report.objects.create(**data)
+        report.images.set(all_saved_images)
+        report.save()
         return JsonResponse(
             status=200,
             data={
                 "status": "success",
-                "message": "Invoice created successfully",
-                "data": {
-                    "quote_number": invoice.quote_number
-                }
+                "message": "Report created successfully",
             }
         )
     except BaseException as e:
@@ -38,13 +42,13 @@ def add_report(request, *args, **kwargs):
 # Get all invoices
 @api_view(['GET'])
 def get_reports(request, *args, **kwargs):
-    invoices = Invoice.objects.all().values()
+    reports = Report.objects.all().values()
     return JsonResponse(
         status=200,
         data={
             "status": "success",
-            "message": "Invoices retrieved successfully",
-            "data": list(invoices)
+            "message": "Reports retrieved successfully",
+            "data": list(reports)
         }
     )
 
@@ -89,17 +93,18 @@ def update_report(request, *args, **kwargs):
 
 @api_view(['DELETE'])
 def delete_report(request, *args, **kwargs):
-    invoice_id = kwargs.get("invoice_id")
+    report_id = kwargs.get("report_id")
+    print(report_id)
     try:
-        Invoice.objects.get(id=invoice_id).delete()
+        Report.objects.get(id=report_id).delete()
         return JsonResponse(
             status=200,
             data={
                 "status": "success",
-                "message": "Invoice deleted successfully",
+                "message": "Report deleted successfully",
             }
         )
-    except Invoice.DoesNotExist:
+    except Report.DoesNotExist:
         return JsonResponse(
             status=400,
             data={

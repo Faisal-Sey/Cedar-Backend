@@ -1,41 +1,41 @@
 SHELL := /bin/bash
 
 install:
-  pip install -r requirements.txt
+	pip install -r requirements.txt
 
 run:
-  python manage.py runserver [::]:8001
+	python manage.py runserver [::]:8001
 
 lint:
-  ./scripts/run-linters.sh
+	./scripts/run-linters.sh
 
 load:
-  python manage.py loaddata ./fixtures/*
+	python manage.py loaddata ./fixtures/*
 
 test:
-  python manage.py test
+	python manage.py test
 
 migration:
-  python manage.py makemigrations
+	python manage.py makemigrations
 
 fake-migrate:
-  python manage.py migrate --fake
+	python manage.py migrate --fake
 
 migrate:
-  python manage.py migrate
+	python manage.py migrate
 
 migrate-data:
-  python -m migration_scripts.main
+	python -m migration_scripts.main
 
 superuser:
-  python manage.py createsuperuser
+	python manage.py createsuperuser
 
 heroku:
-  git push heroku master
+	git push heroku master
 
 deploy:
-  docker-compose build
-  docker-compose up -d
+	docker-compose build
+	docker-compose up -d
 
 down:
-  docker-compose down
+	docker-compose down

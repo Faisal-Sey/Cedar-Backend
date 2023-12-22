@@ -6,5 +6,7 @@ def sanitize_form_data(data_dict):
     for key, value in data_dict.items():
         if isinstance(value, list) and len(value) == 1:
             new_dict[key] = value[0]
+        elif isinstance(value, list) and len(value) > 1:
+            new_dict[key[:-2]] = value
 
     return new_dict
