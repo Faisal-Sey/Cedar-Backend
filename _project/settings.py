@@ -156,3 +156,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 AUTH_USER_MODEL = 'authentication.CustomUser'
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 102400000  # 100 MB, adjust as needed
+

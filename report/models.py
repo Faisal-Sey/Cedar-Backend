@@ -3,6 +3,7 @@ from django.db import models
 
 class FileModel(models.Model):
     file = models.ImageField(upload_to='reports/')
+    name = models.CharField(max_length=255)
     objects = models.Manager()
 
 

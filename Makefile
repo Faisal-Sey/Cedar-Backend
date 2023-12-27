@@ -4,7 +4,7 @@ install:
 	pip install -r requirements.txt
 
 run:
-	python manage.py runserver [::]:8001
+	python manage.py runserver [::]:8000
 
 lint:
 	./scripts/run-linters.sh

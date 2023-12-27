@@ -1,3 +1,4 @@
+from django.forms import model_to_dict
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 
@@ -13,9 +14,10 @@ def add_report(request, *args, **kwargs):
     try:
         data = sanitize_form_data(dict(data))
         images = data.pop("images", [])
+        file_names = data.pop("file_names", [])
         bulk_create_data = [
-            FileModel(file=x)
-            for x in images
+            FileModel(file=x, name=file_names[index])
+            for index, x in enumerate(images)
         ]
         all_saved_images = FileModel.objects.bulk_create(bulk_create_data)
         report = Report.objects.create(**data)
@@ -42,13 +44,20 @@ def add_report(request, *args, **kwargs):
 # Get all invoices
 @api_view(['GET'])
 def get_reports(request, *args, **kwargs):
-    reports = Report.objects.all().values()
+    reports = Report.objects.prefetch_related("images").all()
+    reports_list = []
+    for report in reports:
+        report_images = list(report.images.all().values())
+        modified_report = model_to_dict(report)
+        modified_report["images"] = report_images
+        reports_list.append(modified_report)
+
     return JsonResponse(
         status=200,
         data={
             "status": "success",
             "message": "Reports retrieved successfully",
-            "data": list(reports)
+            "data": reports_list
         }
     )
 
@@ -57,18 +66,28 @@ def get_reports(request, *args, **kwargs):
 @api_view(['GET'])
 def get_report(request, *args, **kwargs):
     report_id = kwargs.get("report_id")
-    report = Report.objects.filter(id=report_id).values().first()
-    if report is None:
-        report = {}
+    try:
+        report = Report.objects.prefetch_related("images").get(id=report_id)
+        report_images = list(report.images.all().values())
+        modified_report = model_to_dict(report)
+        modified_report["images"] = report_images
 
-    return JsonResponse(
-        status=200,
-        data={
-            "status": "success",
-            "message": "Report retrieved successfully",
-            "data": report
-        }
-    )
+        return JsonResponse(
+            status=200,
+            data={
+                "status": "success",
+                "message": "Report retrieved successfully",
+                "data": modified_report
+            }
+        )
+    except Report.DoesNotExist:
+        return JsonResponse(
+            status=400,
+            data={
+                "status": "error",
+                "message": "Report does not exist",
+            }
+        )
 
 
 # Update single invoice
@@ -77,9 +96,10 @@ def update_report(request, *args, **kwargs):
     report_id = kwargs.get("report_id")
     data = sanitize_form_data(dict(request.data))
     images = data.pop("images", [])
+    file_names = data.pop("file_names", [])
     bulk_create_data = [
-        FileModel(file=x)
-        for x in images
+        FileModel(file=x, name=file_names[index])
+        for index, x in enumerate(images)
     ]
     all_saved_images = FileModel.objects.bulk_create(bulk_create_data)
     Report.objects.filter(id=report_id).update(**data)
