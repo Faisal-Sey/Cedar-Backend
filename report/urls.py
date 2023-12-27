@@ -6,8 +6,8 @@ from . import views
 urlpatterns = [
     path('add-report/', views.add_report, name="add_report"),
     path('get-reports/', views.get_reports, name="get_reports"),
-    # path('get-invoice/<int:invoice_id>/', views.get_invoice, name="get_invoice"),
-    # path('update-invoice/<int:invoice_id>/', views.update_invoice, name="update_invoice"),
+    path('get-report/<int:report_id>/', views.get_report, name="get_report"),
+    path('update-report/<int:report_id>/', views.update_report, name="update_report"),
     path('delete-report/<int:report_id>/', views.delete_report, name="delete_report"),
 ]
 

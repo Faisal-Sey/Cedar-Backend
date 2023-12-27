@@ -41,6 +41,7 @@ class Report(models.Model):
     issuer = models.JSONField()
     quality_controller = models.JSONField()
     consumables = models.JSONField()
+    equipments = models.JSONField()
     comments = models.TextField()
     keys = models.JSONField()
     images = models.ManyToManyField(

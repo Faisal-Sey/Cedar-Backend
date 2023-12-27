@@ -56,17 +56,17 @@ def get_reports(request, *args, **kwargs):
 # Get single invoice
 @api_view(['GET'])
 def get_report(request, *args, **kwargs):
-    invoice_id = kwargs.get("invoice_id")
-    invoice = Invoice.objects.filter(id=invoice_id).values().first()
-    if invoice is None:
-        invoice = {}
+    report_id = kwargs.get("report_id")
+    report = Report.objects.filter(id=report_id).values().first()
+    if report is None:
+        report = {}
 
     return JsonResponse(
         status=200,
         data={
             "status": "success",
-            "message": "Invoices retrieved successfully",
-            "data": invoice
+            "message": "Report retrieved successfully",
+            "data": report
         }
     )
 
@@ -74,19 +74,24 @@ def get_report(request, *args, **kwargs):
 # Update single invoice
 @api_view(['PATCH'])
 def update_report(request, *args, **kwargs):
-    invoice_id = kwargs.get("invoice_id")
+    report_id = kwargs.get("report_id")
     data = sanitize_form_data(dict(request.data))
-    signature = data.pop("signature", None)
-    Invoice.objects.filter(id=invoice_id).update(**data)
-    invoice = Invoice.objects.get(id=invoice_id)
-    invoice.signature = signature
-    invoice.save()
+    images = data.pop("images", [])
+    bulk_create_data = [
+        FileModel(file=x)
+        for x in images
+    ]
+    all_saved_images = FileModel.objects.bulk_create(bulk_create_data)
+    Report.objects.filter(id=report_id).update(**data)
+    report = Report.objects.get(id=report_id)
+    report.images.set(all_saved_images)
+    report.save()
 
     return JsonResponse(
         status=200,
         data={
             "status": "success",
-            "message": "Invoices retrieved successfully",
+            "message": "Report updated successfully",
         }
     )
 
@@ -94,7 +99,6 @@ def update_report(request, *args, **kwargs):
 @api_view(['DELETE'])
 def delete_report(request, *args, **kwargs):
     report_id = kwargs.get("report_id")
-    print(report_id)
     try:
         Report.objects.get(id=report_id).delete()
         return JsonResponse(
