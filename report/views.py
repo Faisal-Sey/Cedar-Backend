@@ -48,7 +48,11 @@ def get_reports(request, *args, **kwargs):
     reports_list = []
     for report in reports:
         report_images = list(report.images.all().values())
-        modified_report = model_to_dict(report)
+        modified_report = model_to_dict(report, exclude=['drawing_image_one', 'drawing_image_two'])
+        modified_report[
+            'drawing_image_one_url'] = report.drawing_image_one.url if report.drawing_image_one else None
+        modified_report[
+            'drawing_image_two_url'] = report.drawing_image_two.url if report.drawing_image_two else None
         modified_report["images"] = report_images
         reports_list.append(modified_report)
 
@@ -69,7 +73,11 @@ def get_report(request, *args, **kwargs):
     try:
         report = Report.objects.prefetch_related("images").get(id=report_id)
         report_images = list(report.images.all().values())
-        modified_report = model_to_dict(report)
+        modified_report = model_to_dict(report, exclude=['drawing_image_one', 'drawing_image_two'])
+        modified_report[
+            'drawing_image_one_url'] = report.drawing_image_one.url if report.drawing_image_one else None
+        modified_report[
+            'drawing_image_two_url'] = report.drawing_image_two.url if report.drawing_image_two else None
         modified_report["images"] = report_images
 
         return JsonResponse(

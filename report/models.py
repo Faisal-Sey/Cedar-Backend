@@ -49,5 +49,38 @@ class Report(models.Model):
         FileModel,
         related_name="Report_files"
     )
+    # welding
+    sample_selection = models.CharField(max_length=255, blank=True)
+    size = models.CharField(max_length=255, blank=True)
+    material = models.CharField(max_length=255, blank=True)
+    thickness = models.CharField(max_length=255, blank=True)
+    weld_prep = models.CharField(max_length=255, blank=True)
+    pwht = models.CharField(max_length=255, blank=True)
+    temperature = models.CharField(max_length=255, blank=True)
+    specification = models.CharField(max_length=255, blank=True)
+    acceptance_criteria = models.CharField(max_length=255, blank=True)
+    equipment_consumables = models.JSONField()
+    other_welding_props = models.JSONField()
+    welding_table_data = models.JSONField()
+    item_tested = models.CharField(max_length=255, blank=True)
+    test_method = models.CharField(max_length=255, blank=True)
+    results = models.CharField(max_length=255, blank=True)
+    limitations = models.CharField(max_length=255, blank=True)
+
+    # ut
+    serial_number = models.CharField(max_length=255, blank=True)
+    operating_pressure = models.CharField(max_length=255, blank=True)
+    diagnostic_area_surface = models.CharField(max_length=255, blank=True)
+    date_of_manufacturing = models.CharField(max_length=255, blank=True)
+    technique_standard = models.CharField(max_length=255, blank=True)
+    description = models.TextField(blank=True)
+    equipment_method = models.JSONField()
+    ut_results = models.JSONField()
+    ut_table_data = models.JSONField()
+    drawing_image_one = models.ImageField(upload_to='reports/')
+    drawing_image_two = models.ImageField(upload_to='reports/')
+    drawing_note = models.TextField(blank=True)
+    inspector_comments = models.JSONField()
+
     created_on = models.DateTimeField(auto_now=True)
     objects = models.Manager()
