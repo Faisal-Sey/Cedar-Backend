@@ -22,4 +22,5 @@ urlpatterns = [
     path('auth/', include('authentication.urls')),
     path('invoices/', include('invoice.urls')),
     path('reports/', include('report.urls')),
+    path('job-invoices/', include('job_invoice.urls')),
 ]

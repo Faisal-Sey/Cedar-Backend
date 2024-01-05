@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'invoice',
     'report',
     'authentication',
+    'job_invoice',
 
     # external
     'rest_framework',
