@@ -48,11 +48,23 @@ def get_reports(request, *args, **kwargs):
     reports_list = []
     for report in reports:
         report_images = list(report.images.all().values())
-        modified_report = model_to_dict(report, exclude=['drawing_image_one', 'drawing_image_two'])
+        modified_report = model_to_dict(
+            report,
+            exclude=[
+                'drawing_image_one',
+                'drawing_image_two',
+                'inspector_signature',
+                'reviewer_signature'
+            ]
+        )
         modified_report[
             'drawing_image_one_url'] = report.drawing_image_one.url if report.drawing_image_one else None
         modified_report[
             'drawing_image_two_url'] = report.drawing_image_two.url if report.drawing_image_two else None
+        modified_report[
+            'inspector_signature_url'] = report.inspector_signature.url if report.inspector_signature else None
+        modified_report[
+            'reviewer_signature_url'] = report.reviewer_signature.url if report.reviewer_signature else None
         modified_report["images"] = report_images
         reports_list.append(modified_report)
 

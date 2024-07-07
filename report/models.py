@@ -79,6 +79,8 @@ class Report(models.Model):
     ut_table_data = models.JSONField()
     drawing_image_one = models.ImageField(upload_to='reports/')
     drawing_image_two = models.ImageField(upload_to='reports/')
+    inspector_signature = models.ImageField(upload_to='reports/', null=True)
+    reviewer_signature = models.ImageField(upload_to='reports/', null=True)
     drawing_note = models.TextField(blank=True)
     inspector_comments = models.JSONField()
 
