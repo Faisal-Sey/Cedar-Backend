@@ -9,6 +9,7 @@ class FileModel(models.Model):
 
 class Report(models.Model):
     report_type = models.CharField(max_length=50)
+    report_title = models.TextField(blank=True)
     client_name = models.CharField(max_length=500)
     client_address = models.TextField()
     client_city = models.CharField(max_length=255)
