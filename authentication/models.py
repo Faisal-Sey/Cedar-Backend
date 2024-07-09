@@ -12,5 +12,6 @@ class CustomUser(AbstractUser):
     user_role = models.ForeignKey(
         UserRole,
         on_delete=models.CASCADE,
-        related_name="User_role"
+        related_name="User_role",
+        null=True
     )
