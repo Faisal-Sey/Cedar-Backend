@@ -12,13 +12,14 @@ from report.models import Report, FileModel
 def add_report(request, *args, **kwargs):
     data = request.data
     try:
-        data = sanitize_form_data(dict(data))
         images = data.pop("images", [])
         file_names = data.pop("file_names", [])
+        data = sanitize_form_data(dict(data))
         bulk_create_data = [
             FileModel(file=x, name=file_names[index])
             for index, x in enumerate(images)
         ]
+        print(bulk_create_data)
         all_saved_images = FileModel.objects.bulk_create(bulk_create_data)
         report = Report.objects.create(**data)
         report.images.set(all_saved_images)
