@@ -6,6 +6,9 @@ class FileModel(models.Model):
     name = models.CharField(max_length=255)
     objects = models.Manager()
 
+    def __str__(self):
+        return self.name
+
 
 class Report(models.Model):
     report_type = models.CharField(max_length=50)
