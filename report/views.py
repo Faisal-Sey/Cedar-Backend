@@ -14,6 +14,8 @@ def add_report(request, *args, **kwargs):
     try:
         images = data.pop("images", [])
         file_names = data.pop("file_names", [])
+        print(images)
+        print(file_names)
         data = sanitize_form_data(dict(data))
         bulk_create_data = [
             FileModel(file=x, name=file_names[index])
