@@ -17,12 +17,12 @@ def add_report(request, *args, **kwargs):
         print(images)
         print(file_names)
         data = sanitize_form_data(dict(data))
-        bulk_create_data = [
-            FileModel(file=x, name=file_names[index])
-            for index, x in enumerate(images)
-        ]
-        print(bulk_create_data)
-        all_saved_images = FileModel.objects.bulk_create(bulk_create_data)
+        all_saved_images = []
+        for index, x in enumerate(images):
+            all_saved_images.append(
+                FileModel.objects.create(file=x, name=file_names[index])
+            )
+
         report = Report.objects.create(**data)
         report.images.set(all_saved_images)
         report.save()
