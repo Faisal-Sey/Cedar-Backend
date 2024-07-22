@@ -87,6 +87,7 @@ class Report(models.Model):
     reviewer_signature = models.ImageField(upload_to='reports/', null=True)
     drawing_note = models.TextField(blank=True)
     inspector_comments = models.JSONField()
+    asset_model = models.CharField(max_length=255, blank=True)
 
     created_on = models.DateTimeField(auto_now=True)
     objects = models.Manager()
