@@ -88,6 +88,8 @@ class Report(models.Model):
     drawing_note = models.TextField(blank=True)
     inspector_comments = models.JSONField()
     asset_model = models.CharField(max_length=255, blank=True)
+    extent_test = models.CharField(max_length=255, blank=True)
+    weld_process = models.CharField(max_length=255, blank=True)
 
     created_on = models.DateTimeField(auto_now=True)
     objects = models.Manager()
